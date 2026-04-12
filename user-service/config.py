@@ -22,6 +22,5 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     ENV = "production"
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://cloudacademy:pfm_2020@user-db:3306/user'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:uHmcdhSukSpLvVncaEboMWcYAdppOHKR@mysql.railway.internal:3306/railway'
     SQLALCHEMY_ECHO = False
-
