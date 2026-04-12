@@ -22,5 +22,5 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     ENV = "production"
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:uHmcdhSukSpLvVncaEboMWcYAdppOHKR@mysql.railway.internal:3306/railway'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:eoRWcqanWFPjuRzdbRtasArcugkVjkRe@mysql.railway.internal:3306/railway'
     SQLALCHEMY_ECHO = False
