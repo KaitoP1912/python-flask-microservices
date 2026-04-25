@@ -1,19 +1,56 @@
 {% extends "base_col_1.html" %}
-{% from "macros/_macros_form.html" import render_field %}
-{% block title %}Product page{% endblock %}
+{% block title %}Admin Products{% endblock %}
 
 {% block pageContent %}
-    <strong>{{ message }}</strong>
-    <h1>Add Product</h1>
+    <h1>Products Dashboard</h1>
 
-    <div class="form-group">
-        <form action="" method=post enctype=multipart/form-data>
-            <input type="text" name="name">
-            <input type="text" name="slug">
-            <input type=file name=image>
-            <input type="number" name="price">
-            <input type=submit value=Upload>
-        </form>
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Add Product</strong></div>
+        <div class="panel-body">
+            <form method="POST" class="form-inline">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="name" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="slug" placeholder="slug" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="image" placeholder="image filename">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="number" name="price" placeholder="price" required>
+                </div>
+                <button class="btn btn-success" type="submit">Create</button>
+            </form>
+        </div>
     </div>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.slug }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <a class="btn btn-xs btn-default" href="/admin/product/{{ product.id }}/edit">Edit</a>
+                        <form method="POST" action="/admin/product/{{ product.id }}/delete" style="display:inline-block;">
+                            <button class="btn btn-xs btn-danger" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

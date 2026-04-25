@@ -1,0 +1,30 @@
+{% extends "base_col_1.html" %}
+{% block title %}Order Detail{% endblock %}
+
+{% block pageContent %}
+    <h2 class="section-title">Order #{{ order.id }}</h2>
+    <p class="section-subtitle">Status: <strong>{{ order.status }}</strong></p>
+
+    <div class="detail-list">
+        {% set total = namespace(value=0) %}
+        {% for item in order['items'] %}
+            {% set product = product_map.get(item.product, {}) %}
+            {% set subtotal = product.get('price', 0) * item.quantity %}
+            {% set total.value = total.value + subtotal %}
+            <article class="detail-item">
+                <div>
+                    <h3>{{ product.get('name', 'Product #' ~ item.product) }}</h3>
+                    <p class="meta">${{ product.get('price', 0) }} x {{ item.quantity }}</p>
+                </div>
+                <strong>${{ subtotal }}</strong>
+            </article>
+        {% endfor %}
+    </div>
+
+    <div class="detail-total">
+        <span>Total</span>
+        <strong>${{ total.value }}</strong>
+    </div>
+
+    <a href="/orders" class="btn-secondary">Back To History</a>
+{% endblock %}

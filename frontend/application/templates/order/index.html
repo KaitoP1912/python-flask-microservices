@@ -1,0 +1,69 @@
+{% extends "base_col_1.html" %}
+{% block title %}Checkout{% endblock %}
+
+{% block pageContent %}
+    <section class="checkout-page">
+        <div>
+            <h2 class="section-title">Checkout</h2>
+            <p class="section-subtitle">Review your selected items before placing order.</p>
+
+            <div class="cart-list">
+                {% for item in order['items'] %}
+                    {% set product = product_map.get(item.product, {}) %}
+                    {% set line_total = product.get('price', 0) * item.quantity %}
+                    <article class="cart-item-card">
+                        <div class="cart-item-main">
+                            <div class="cart-avatar">🍔</div>
+                            <div>
+                                <h3>{{ product.get('name', 'Product #' ~ item.product) }}</h3>
+                                <p>${{ product.get('price', 0) }} each</p>
+                            </div>
+                        </div>
+
+                        <div class="cart-controls">
+                            <div class="qty-group">
+                                <form method="POST" action="/checkout/item/{{ item.product }}/decrease">
+                                    <button type="submit" class="qty-btn">-</button>
+                                </form>
+                                <span class="qty-value">{{ item.quantity }}</span>
+                                <form method="POST" action="/checkout/item/{{ item.product }}/increase">
+                                    <button type="submit" class="qty-btn">+</button>
+                                </form>
+                            </div>
+
+                            <p class="line-total">${{ line_total }}</p>
+
+                            <form method="POST" action="/checkout/item/{{ item.product }}/remove">
+                                <button type="submit" class="btn-link-danger">Remove</button>
+                            </form>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+
+        <aside class="checkout-summary">
+            <h3>Payment Summary</h3>
+            <div class="summary-row">
+                <span>Sub Total</span>
+                <strong>${{ cart_total }}</strong>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Fee</span>
+                <strong>$9</strong>
+            </div>
+            <div class="summary-row summary-total">
+                <span>Total</span>
+                <strong>${{ cart_total + 9 }}</strong>
+            </div>
+
+            <form method="POST" action="/checkout/clear">
+                <button type="submit" class="btn-secondary btn-full">Clear Cart</button>
+            </form>
+
+            <form method="POST">
+                <button type="submit" class="btn-primary btn-full">Place Order</button>
+            </form>
+        </aside>
+    </section>
+{% endblock %}

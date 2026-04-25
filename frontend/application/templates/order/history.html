@@ -1,0 +1,38 @@
+{% extends "base_col_1.html" %}
+{% block title %}My Orders{% endblock %}
+
+{% block pageContent %}
+    <h2 class="section-title">Order History</h2>
+    <p class="section-subtitle">Track your previous purchases and status updates.</p>
+
+    {% if orders %}
+        <div class="history-list">
+            {% for order in orders %}
+                <article class="history-card">
+                    <div>
+                        <p class="meta">Order ID</p>
+                        <h3>#{{ order.id }}</h3>
+                    </div>
+                    <div>
+                        <p class="meta">Status</p>
+                        <h4>{{ order.status }}</h4>
+                    </div>
+                    <div>
+                        <p class="meta">Items</p>
+                        <h4>{{ order['items']|length }}</h4>
+                    </div>
+                    <div>
+                        <p class="meta">Created</p>
+                        <h4>{{ order.date_added if order.date_added else '-' }}</h4>
+                    </div>
+                    <a class="btn-secondary" href="/orders/{{ order.id }}">View Detail</a>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <span class="empty-emoji">🧾</span>
+            <p>No order history found.</p>
+        </div>
+    {% endif %}
+{% endblock %}

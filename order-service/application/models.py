@@ -21,9 +21,12 @@ class Order(db.Model):
             items.append(i.to_json())
 
         return {
+            'id': self.id,
             'items': items,
             'is_open': self.is_open,
-            'user_id': self.user_id
+            'user_id': self.user_id,
+            'date_added': self.date_added.isoformat() if self.date_added else None,
+            'date_updated': self.date_updated.isoformat() if self.date_updated else None
         }
 
 

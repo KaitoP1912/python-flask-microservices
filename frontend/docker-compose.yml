@@ -7,7 +7,7 @@ networks:
   micro_network:
     name: micro_network
 services:
-  user-api:
+  user-service:
     container_name: cuser-service
     build:
       context: ../user-service
@@ -32,7 +32,7 @@ services:
       - micro_network
     volumes:
     - userdb_vol:/var/lib/mysql
-  product-api:
+  product-service:
     build:
       context: ../product-service
 
@@ -55,7 +55,7 @@ services:
       - micro_network
     volumes:
     - productdb_vol:/var/lib/mysql
-  order-api:
+  order-service:
     container_name: corder-service
     build:
       context: ../order-service

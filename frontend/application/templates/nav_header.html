@@ -1,24 +1,24 @@
 {% from "macros/_macros_basket.html" import count_items %}
-<header class="row">
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
-            </ul>
-            <ul class="nav navbar-nav pull-right">
-                {% if not session['user'] %}
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
-                {% else %}
-                    {% if session['role'] is true %}
-                        <li><a href="/admin">Dashboard</a></li>
-                        <li><a href="/logout">Logout</a></li>
-                    {% else %}
-                        <li><a href="/logout">Logout</a></li>
-                    {% endif %}
-                {% endif %}
-                <li><a href="/checkout">Checkout <span class="badge">{{ count_items() }}</span></a></li>
-            </ul>
-        </div>
-    </nav>
+<header class="topbar">
+    <div class="topbar-left">
+        <p class="topbar-subtitle">Fresh and fast delivery</p>
+        <h1 class="topbar-title">FoodDash</h1>
+    </div>
+    <div class="topbar-right">
+        {% if session.get('user') %}
+            <a class="top-chip" href="/orders">Order History</a>
+        {% endif %}
+
+        <a class="top-chip top-chip-accent" href="/checkout">Checkout <span class="badge">{{ count_items() }}</span></a>
+
+        {% if not session.get('user') %}
+            <a class="top-chip" href="/login">Login</a>
+            <a class="top-chip" href="/register">Register</a>
+        {% else %}
+            {% if session.get('role') is true %}
+                <a class="top-chip" href="/admin">Dashboard</a>
+            {% endif %}
+            <a class="top-chip" href="/logout">Logout</a>
+        {% endif %}
+    </div>
 </header>
